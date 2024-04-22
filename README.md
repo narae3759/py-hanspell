@@ -1,5 +1,4 @@
-# 원본 Github
- [Github(ssut)](https://github.com/ssut/py-hanspell)
+# 원본 Github[Github(ssut)](https://github.com/ssut/py-hanspell)
 
 # py-hanspell
 
