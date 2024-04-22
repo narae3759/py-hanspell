@@ -45,8 +45,11 @@ def check(text):
         return Checked(result=False)
 
     payload = {
-        'color_blindness': '0',
-        'q': text
+        'passportKey': "1e96e426774e2dd25b589091be6c803d9d7eb8fb",
+        '_callback' : "jQuery1124047714104517624456_1713760593235",
+        'q': text,
+        'color_blindness': 0,
+        'where': "nexearch"
     }
 
     headers = {
