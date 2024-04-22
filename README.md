@@ -1,3 +1,6 @@
+# 원본 Github
+ [Github(ssut)](https://github.com/ssut/py-hanspell)
+
 # py-hanspell
 
 [![Build Status](https://travis-ci.org/ssut/py-hanspell.svg?branch=master)](https://travis-ci.org/ssut/py-hanspell)
