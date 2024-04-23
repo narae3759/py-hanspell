@@ -3,6 +3,7 @@
 Python용 한글 맞춤법 검사 모듈
 """
 
+import re
 import requests
 import json
 import time
@@ -61,7 +62,10 @@ def check(text):
     r = _agent.get(base_url, params=payload, headers=headers)
     passed_time = time.time() - start_time
 
-    data = json.loads(r.text[43:-2])
+
+    match = re.search(r'\{(.*?)\}\}\}', r.text)
+    data = json.loads(match.group(0))
+    # data = json.loads(r.text[43:-2])
     html = data['message']['result']['html']
     result = {
         'result': True,
