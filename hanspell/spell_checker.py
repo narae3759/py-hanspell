@@ -46,7 +46,7 @@ def check(text):
 
     payload = {
         'passportKey': "1e96e426774e2dd25b589091be6c803d9d7eb8fb",
-        '_callback' : "jQuery1124047714104517624456_1713760593235",
+        '_callback' : "jQuery1124027569949294621954_1713772789513",
         'q': text,
         'color_blindness': 0,
         'where': "nexearch"
@@ -61,7 +61,7 @@ def check(text):
     r = _agent.get(base_url, params=payload, headers=headers)
     passed_time = time.time() - start_time
 
-    data = json.loads(r.text)
+    data = json.loads(r.text[43:-2])
     html = data['message']['result']['html']
     result = {
         'result': True,
