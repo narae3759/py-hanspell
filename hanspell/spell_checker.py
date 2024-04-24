@@ -10,6 +10,7 @@ import time
 import sys
 from collections import OrderedDict
 import xml.etree.ElementTree as ET
+from urllib.parse import urlparse, parse_qs
 
 from . import __version__
 from .response import Checked
@@ -30,7 +31,7 @@ def _remove_tags(text):
     return result
 
 
-def check(text):
+def check(text, requestURL):
     """
     매개변수로 입력받은 한글 문장의 맞춤법을 체크합니다.
     """
@@ -45,13 +46,17 @@ def check(text):
     if len(text) > 500:
         return Checked(result=False)
 
-    payload = {
-        'passportKey': "1e96e426774e2dd25b589091be6c803d9d7eb8fb",
-        '_callback' : "jQuery1124027569949294621954_1713772789513",
-        'q': text,
-        'color_blindness': 0,
-        'where': "nexearch"
-    }
+    # requestURL 
+    requestURL_parse = parse_qs(urlparse(requestURL).query)
+    payload = {key: value[0] for key, value in requestURL_parse.items()}
+    payload['q'] = text
+    # payload = {
+    #     'passportKey': "1e96e426774e2dd25b589091be6c803d9d7eb8fb",
+    #     '_callback' : "jQuery1124027569949294621954_1713772789513",
+    #     'q': text,
+    #     'color_blindness': 0,
+    #     'where': "nexearch"
+    # }
 
     headers = {
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
@@ -62,10 +67,9 @@ def check(text):
     r = _agent.get(base_url, params=payload, headers=headers)
     passed_time = time.time() - start_time
 
-
-    match = re.search(r'\{(.*?)\}\}\}', r.text)
+    match = re.search(r'\{(.*?)\}\}\}', r.text)         # method 2
     data = json.loads(match.group(0))
-    # data = json.loads(r.text[43:-2])
+    # data = json.loads(r.text[43:-2])                  # method 1
     html = data['message']['result']['html']
     result = {
         'result': True,
